@@ -61,5 +61,8 @@ body {
 .container__left {
   width: 20%;
   border-right: 1px solid #eff3f4;
+  @media only screen and (max-width: 820px) {
+    width: 10%;
+  }
 }
 </style>

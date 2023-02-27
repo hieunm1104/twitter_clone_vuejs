@@ -111,8 +111,8 @@ export default {
     position: fixed;
     top: 0;
     padding: 15px 20px;
-    width: 100%;
     max-width: 620px;
+    width: 71%;
     span {
       font-size: 20px;
       font-weight: 800;
@@ -188,6 +188,12 @@ export default {
             cursor: pointer;
           }
         }
+      }
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    &__content {
+      &--control {
       }
     }
   }

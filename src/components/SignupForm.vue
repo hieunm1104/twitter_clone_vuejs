@@ -23,7 +23,11 @@
                 placeholder="Password..."
                 v-model="password"
               />
-              <button @click="signup" class="btn-signup">
+              <button
+                @click="signup"
+                @keyup.enter="signup()"
+                class="btn-signup"
+              >
                 <span>Create Account</span>
               </button>
               <div class="login">

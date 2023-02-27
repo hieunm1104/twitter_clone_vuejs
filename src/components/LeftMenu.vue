@@ -3,7 +3,6 @@
     <ul class="navbar__list">
       <a class="link" href="/">
         <img
-          class="link__img"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Twitter-logo.svg/2491px-Twitter-logo.svg.png"
           alt="twitter"
       /></a>
@@ -24,7 +23,7 @@
       </li>
       <li class="navbar__list--item">
         <a class="link" href="/login" @click="logout"
-          ><i class="fa-solid fa-user"></i><span>Log out</span></a
+          ><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a
         >
       </li>
     </ul>
@@ -93,6 +92,25 @@ export default {
         }
       }
     }
+  }
+  @media only screen and (max-width: 820px) {
+    &__list {
+      align-items: center;
+      .link {
+        img {
+          margin: 5px 20px 30px 0;
+        }
+      }
+      &--item {
+        .link {
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 500px) {
   }
 }
 </style>

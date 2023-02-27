@@ -49,5 +49,18 @@ export default {
     border-left: 1px solid #eff3f4;
     padding: 20px;
   }
+  @media only screen and (max-width: 820px) {
+    /* For tablets: */
+    width: 90%;
+    &--rightmenu {
+      display: none;
+    }
+    &--main {
+      width: 90%;
+      border-right: 1px solid #eff3f4;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+  }
 }
 </style>

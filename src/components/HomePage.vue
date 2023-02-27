@@ -176,5 +176,7 @@ export default {
       height: 60px;
     }
   }
+  @media only screen and (max-width: 500px) {
+  }
 }
 </style>

@@ -36,5 +36,11 @@ export default {
     margin-right: 20px;
     padding-left: 30px;
   }
+  @media only screen and (max-width: 820px) {
+    width: 90%;
+    &--rightmenu {
+      display: none;
+    }
+  }
 }
 </style>

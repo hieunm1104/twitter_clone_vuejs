@@ -54,10 +54,13 @@ export default {
     h1 {
       color: black;
       font-weight: bold;
-      line-height: 24px;
+      line-height: 50px;
       font-size: 40px;
       text-align: center;
     }
+  }
+  @media only screen and (max-width: 820px) {
+    width: 90%;
   }
 }
 </style>
