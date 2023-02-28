@@ -81,6 +81,7 @@ export default {
                   console.log("da vao toi day");
                 });
               });
+            Vue.toasted.show("Login Successfully").goAway(1500);
             this.$router.push("/");
           }
         })

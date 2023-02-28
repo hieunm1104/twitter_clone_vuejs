@@ -134,6 +134,7 @@ export default {
           localStorage.setItem("name", this.name);
           localStorage.setItem("description", this.aboutMe);
           Vue.toasted.show("Profile updated").goAway(1500);
+          this.$router.push("/profile");
           if (isUrlPresent) {
             localStorage.setItem("photoURL", downloadURL);
           }

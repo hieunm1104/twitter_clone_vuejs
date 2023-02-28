@@ -5,7 +5,7 @@
     </div>
     <div class="status">
       <div class="status__avatar">
-        <img :src="photoURLCurrentUser" alt="" />
+        <img :src="user.URL" alt="" />
       </div>
       <div class="status__content">
         <div class="status__content--input">
@@ -42,10 +42,6 @@ export default {
     };
   },
   methods: {
-    sendData() {
-      this.$emit("inputData", this.data);
-      this.data = "";
-    },
     async createPost() {
       console.log("user", this.user);
       let postCreate = {
@@ -74,7 +70,6 @@ export default {
         if (querySnapshot) {
           this.data.img = "";
           this.data.content = "";
-          this.getPost();
         }
       }
     },

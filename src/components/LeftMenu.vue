@@ -1,11 +1,13 @@
 <template>
   <div class="navbar">
     <ul class="navbar__list">
-      <a class="link" href="/">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Twitter-logo.svg/2491px-Twitter-logo.svg.png"
-          alt="twitter"
-      /></a>
+      <li class="navbar__list--item">
+        <a class="link" href="/">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Twitter-logo.svg/2491px-Twitter-logo.svg.png"
+            alt="twitter"
+        /></a>
+      </li>
       <li class="navbar__list--item">
         <a class="link" href="/"
           ><i class="fa-solid fa-house"></i><span>Home</span></a
@@ -54,27 +56,32 @@ export default {
   flex-direction: column;
   position: sticky;
   top: 0;
+  li {
+    list-style: none;
+  }
   img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     margin: 5px 20px 30px 12px;
+    text-align: center;
   }
   i {
     font-size: 20px;
     width: 26px;
     height: 26px;
+    color: black;
   }
   &__list {
     padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    &--item {
+    &--item:not(:first-child) {
       list-style: none;
       margin-bottom: 20px;
       border-radius: #9999;
       padding: 12px;
-      &:hover {
+      &:hover:not(:first-child) {
         background-color: #e7e8e8;
         border-radius: 20px;
       }
@@ -93,15 +100,12 @@ export default {
       }
     }
   }
-  @media only screen and (max-width: 820px) {
+  @media only screen and (max-width: 1024px) {
     &__list {
       align-items: center;
-      .link {
-        img {
-          margin: 5px 20px 30px 0;
-        }
-      }
+      padding: unset;
       &--item {
+        padding: 12px 0px;
         .link {
           span {
             display: none;
@@ -111,6 +115,7 @@ export default {
     }
   }
   @media only screen and (max-width: 500px) {
+    display: none;
   }
 }
 </style>

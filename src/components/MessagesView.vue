@@ -59,8 +59,35 @@ export default {
       text-align: center;
     }
   }
-  @media only screen and (max-width: 820px) {
+  @media only screen and (max-width: 1005px) {
     width: 90%;
+    &--main {
+      width: 90%;
+    }
+    &--rightmenu {
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 690px) {
+    width: 100%;
+    &--main {
+      width: 100%;
+    }
+    &--rightmenu {
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    position: relative;
+    &--main {
+      width: 100%;
+    }
+    &--rightmenu {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
   }
 }
 </style>

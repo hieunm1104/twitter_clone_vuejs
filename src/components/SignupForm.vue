@@ -90,6 +90,7 @@ export default {
               this.name = "";
               this.email = "";
               this.password = "";
+              Vue.toasted.show("Signup Successfully").goAway(1500);
               this.$router.push("/login");
             })
             .catch((err) => console.log(err));

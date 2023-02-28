@@ -71,6 +71,7 @@ export default {
       loading: true,
       isScrollToBottom: false,
       totalMessages: 0,
+      unsubcribe: null,
     };
   },
   watch: {
@@ -79,22 +80,27 @@ export default {
         if (newVal !== oldVal) {
           let groupChatId = `${this.currentPeerUser.id} + ${this.currentUserId}`;
           console.log("group chat", groupChatId);
-          await firebase
-            .firestore()
-            .collection("Messages")
-            .doc(groupChatId)
-            .collection(groupChatId)
-            .get()
-            .then((querySnapshot) => {
-              if (querySnapshot.docs.length > 0) {
-                this.groupChatId = groupChatId;
-              } else {
-                this.groupChatId = `${this.currentUserId} + ${this.currentPeerUser.id}`;
-              }
-            });
-          console.log(this.groupChatId);
-          this.limitNumber = 10;
-          await this.getMessages();
+          if (newVal) {
+            await firebase
+              ?.firestore()
+              ?.collection("Messages")
+              ?.doc(groupChatId)
+              ?.collection(groupChatId)
+              ?.get()
+              ?.then((querySnapshot) => {
+                if (querySnapshot.docs.length > 0) {
+                  this.groupChatId = groupChatId;
+                } else {
+                  this.groupChatId = `${this.currentUserId} + ${this.currentPeerUser.id}`;
+                }
+              })
+              ?.catch((error) => {
+                console.log("chat id err ", error);
+              });
+
+            this.limitNumber = 10;
+            await this.getMessages(false);
+          }
         }
       },
       deep: true,
@@ -115,7 +121,6 @@ export default {
         }
         if (newVal && newVal.length > 0 && this.isScrollToBottom) {
           let el = this.$refs.bottom;
-          console.log("el", el.getBoundingClientRect()?.top);
           if (el) {
             // Use el.scrollIntoView() to instantly scroll to the element
             setTimeout(() => {
@@ -128,10 +133,11 @@ export default {
     },
   },
   methods: {
-    loadMore() {
+    async loadMore() {
+      console.log(this.unsubcribe);
       this.isScrollToBottom = false;
       this.limitNumber += 10;
-      this.getMessages();
+      await this.getMessages(true);
     },
     sendMessage(content) {
       if (content.trim() === "") {
@@ -158,38 +164,67 @@ export default {
 
       this.listMessage.push(message);
     },
-    getMessages() {
+    getMessages(isRemove) {
       console.log("call coming");
       this.loading = true;
       this.listMessage = [];
-      firebase
-        .firestore()
-        .collection("Messages")
-        .doc(this.groupChatId)
-        .collection(this.groupChatId)
-        .orderBy("createdAt", "desc")
-        .limit(this.limitNumber)
-        .onSnapshot((querySnapshot) => {
-          console.log("querySnapshot", querySnapshot);
-          let listMessage = [];
-          querySnapshot.forEach((doc) => {
-            listMessage.push({
-              ...doc.data(),
-              createdAt: doc.data().createdAt?.toDate(),
+      if (this.groupChatId) {
+        if (isRemove) {
+          firebase
+            ?.firestore()
+            ?.collection("Messages")
+            ?.doc(String(this.groupChatId))
+            ?.collection(String(this.groupChatId))
+            ?.orderBy("createdAt", "desc")
+            ?.limit(this.limitNumber)
+            ?.get()
+            .then((querySnapshot) => {
+              console.log("querySnapshot", 1);
+              let listMessage = [];
+              querySnapshot.forEach((doc) => {
+                listMessage.push({
+                  ...doc.data(),
+                  createdAt: doc.data().createdAt?.toDate(),
+                });
+              });
+              this.listMessage = listMessage.reverse();
+              this.loading = false;
+            })
+            ?.catch((error) => {
+              console.log("Error getting documents: ", error);
+              this.loading = false;
             });
-          });
-          this.listMessage = listMessage.reverse();
-          this.loading = false;
-        })
-        .catch((error) => {
-          console.log("Error getting documents: ", error);
-          this.loading = false;
-        });
+        } else {
+          firebase
+            ?.firestore()
+            ?.collection("Messages")
+            ?.doc(String(this.groupChatId))
+            ?.collection(String(this.groupChatId))
+            ?.orderBy("createdAt", "desc")
+            ?.limit(this.limitNumber)
+            ?.onSnapshot((querySnapshot) => {
+              console.log("querySnapshot", 2);
+              let listMessage = [];
+              querySnapshot.forEach((doc) => {
+                listMessage.push({
+                  ...doc.data(),
+                  createdAt: doc.data().createdAt?.toDate(),
+                });
+              });
+              this.listMessage = listMessage.reverse();
+              this.loading = false;
+            })
+            ?.catch((error) => {
+              console.log("Error getting documents: ", error);
+              this.loading = false;
+            });
+        }
+      }
     },
   },
-  mounted() {
+  async mounted() {
     this.isScrollToBottom = true;
-    this.getMessages();
+    await this.getMessages(false);
   },
 };
 </script>

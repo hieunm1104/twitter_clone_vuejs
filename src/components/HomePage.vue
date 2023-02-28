@@ -22,12 +22,9 @@
             <img :src="post.img" alt="" />
           </div>
         </div>
-        <div class="post__info--react" v-if="post.likeList">
-          <div v-for="(like, i) in post.likeList" :key="i" class="like">
-            {{ like.username }}
-          </div>
-          <a-button @click="likeClick(post.id)">Like</a-button>
-        </div>
+        <!-- <div class="post__info--react" v-if="post.likeList">
+         
+        </div> -->
       </div>
     </div>
   </div>
@@ -118,6 +115,22 @@ export default {
           .then(() => {});
       }
     },
+    async getUser() {
+      let id = localStorage.getItem("id");
+      if (id) {
+        await firebase
+          .firestore()
+          .collection("users")
+          .get()
+          .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              if (id === doc.data().id) {
+                this.user = doc.data();
+              }
+            });
+          });
+      }
+    },
   },
   created() {
     console.log("created");
@@ -164,6 +177,15 @@ export default {
       .like {
         display: flex;
         background-color: red;
+      }
+    }
+    &--content {
+      .image {
+        img {
+          object-fit: cover;
+          width: 400px;
+          height: 500px;
+        }
       }
     }
   }

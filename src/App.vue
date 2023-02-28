@@ -64,5 +64,8 @@ body {
   @media only screen and (max-width: 820px) {
     width: 10%;
   }
+  @media only screen and (max-width: 500px) {
+    width: unset;
+  }
 }
 </style>

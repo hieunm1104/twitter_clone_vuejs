@@ -1,8 +1,8 @@
 <template>
   <div class="container__right">
     <div class="container__right--main">
-      <header-post @inputData="getData" />
-      <HomePage v-bind:sendData="data" />
+      <header-post />
+      <HomePage />
     </div>
     <div class="container__right--rightmenu">
       <right-menu />
@@ -25,13 +25,6 @@ export default {
       data: {},
     };
   },
-  methods: {
-    getData(data) {
-      this.data.img = data.img;
-      this.data.content = data.content;
-      console.log("data", this.data);
-    },
-  },
   created() {
     if (localStorage.getItem("id") == null) this.$router.push("/login");
   },
@@ -49,7 +42,7 @@ export default {
     border-left: 1px solid #eff3f4;
     padding: 20px;
   }
-  @media only screen and (max-width: 820px) {
+  @media only screen and (max-width: 1024px) {
     /* For tablets: */
     width: 90%;
     &--rightmenu {
@@ -61,6 +54,7 @@ export default {
     }
   }
   @media only screen and (max-width: 500px) {
+    width: 100%;
   }
 }
 </style>

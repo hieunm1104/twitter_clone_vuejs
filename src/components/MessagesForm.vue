@@ -1,6 +1,5 @@
 <template>
   <div class="messages">
-    {{ test }}
     <div class="messages__navbar">
       <div class="messages__navbar--left"><span>Messages</span></div>
       <div class="messages__navbar--right">
@@ -109,6 +108,7 @@ export default {
       span {
         font-weight: bold;
         font-size: 30px;
+        color: #0f1419;
       }
     }
     &--right {
